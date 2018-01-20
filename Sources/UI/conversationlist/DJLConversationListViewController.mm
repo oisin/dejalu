@@ -679,6 +679,12 @@ private:
     [self toggleStarSelection];
 }
 
+- (IBAction) starAndArchive:(id)sender
+{
+    [self toggleStarSelection];
+    [self _archiveMessage];
+}
+
 - (IBAction) deleteMessage:(id)sender
 {
     [self _deleteMessage];
@@ -950,6 +956,12 @@ private:
     [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
     [item setTarget:self];
     [menu addItem:item];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Star and Archive" action:@selector(starAndArchive:) keyEquivalent:@"s"];
+    [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
+    [item setTarget:self];
+    [menu addItem:item];
+    
     item = [[NSMenuItem alloc] initWithTitle:@"Mark as Spam" action:@selector(markAsSpam:) keyEquivalent:@"j"];
     [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
     [item setTarget:self];
@@ -2271,7 +2283,7 @@ private:
         }
         return [[_tableView selectedRowIndexes] count] > 0;
     }
-    else if ([item action] == @selector(archiveMessage:)) {
+    else if ([item action] == @selector(archiveMessage:) || [item action] == @selector(starAndArchive:)) {
         if ([[_tableView selectedRowIndexes] count] == 0) {
             return NO;
         }

@@ -48,6 +48,7 @@
 
 - (IBAction) toggleRead:(id)sender;
 - (IBAction) toggleStar:(id)sender;
+- (IBAction) starAndArchive:(id)sender;
 - (IBAction) deleteMessage:(id)sender;
 - (IBAction) archiveMessage:(id)sender;
 - (IBAction) markAsSpam:(id)sender;

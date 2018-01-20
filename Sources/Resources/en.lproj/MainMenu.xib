@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -160,6 +161,11 @@ CA
                                     <action selector="toggleStar:" target="-1" id="z3g-Eq-jgT"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Star and Archive" keyEquivalent="S" id="80P-n6-0de">
+                                <connections>
+                                    <action selector="starAndArchive:" target="-1" id="c0b-6H-Dfd"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Mark As Spam" keyEquivalent="J" id="85p-S2-5iL">
                                 <connections>
                                     <action selector="markAsSpam:" target="-1" id="y2p-TA-4Ku"/>
@@ -170,7 +176,7 @@ CA
                                     <action selector="showLabelsPanel:" target="-1" id="ChB-IB-i0c"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Apply Label &amp; Archive" keyEquivalent="l" id="jxH-Rx-EP2">
+                            <menuItem title="Apply Label &amp; Archive" state="on" keyEquivalent="l" id="jxH-Rx-EP2">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="showLabelsAndArchivePanel:" target="-1" id="pcv-P4-1V7"/>
