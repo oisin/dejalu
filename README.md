@@ -1,5 +1,7 @@
 <img src="screenshot.jpg" width="350" align="right" />
 
+_Oisin says: this client does too much, so I am chopping it up and simplifying it, and adding personal email workflow items_
+
 # dejalu
 
 Fast and Simple Email Client.
