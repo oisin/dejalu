@@ -679,6 +679,12 @@ private:
     [self toggleStarSelection];
 }
 
+- (IBAction) starAndArchive:(id)sender
+{
+    [self toggleStarSelection];
+    [self _archiveMessage];
+}
+
 - (IBAction) deleteMessage:(id)sender
 {
     [self _deleteMessage];
@@ -691,7 +697,12 @@ private:
 
 - (void) replyMessage:(id)sender
 {
-    [self _replyMessage];
+    [self _replyMessageWithType:DJLReplyTypeReply];
+}
+
+- (void) replyAllMessage:(id)sender
+{
+    [self _replyMessageWithType:DJLReplyTypeReplyAll];
 }
 
 - (void) forwardMessage:(id)sender
@@ -922,44 +933,70 @@ private:
         }
     }
 
+    // This is the menu that you see when right-click on the item in the table view at the left
+    // that has a list of all the items in the mailbox. Not sure this is useful in real life.
+    // These bindings appear to have no effect whatever on interactions with the items -- the
+    // keys are bound elsewhere. Potentially might just remove this menu entirely -- omh
+    
     NSMenu * menu = [[NSMenu alloc] init];
     NSMenuItem * item;
     item = [[NSMenuItem alloc] initWithTitle:@"Reply" action:@selector(replyMessage:) keyEquivalent:@"r"];
-    [item setKeyEquivalentModifierMask:NSCommandKeyMask];
-    [item setTarget:self];
-    [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Forward" action:@selector(forwardMessage:) keyEquivalent:@"f"];
-    [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
-    [item setTarget:self];
-    [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(deleteMessage:) keyEquivalent:[NSString stringWithFormat:@"%c", 0x08]];
-    [item setKeyEquivalentModifierMask:NSCommandKeyMask];
-    [item setTarget:self];
-    [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Archive" action:@selector(archiveMessage:) keyEquivalent:[NSString stringWithFormat:@"%c", 0x08]];
     [item setKeyEquivalentModifierMask:0];
     [item setTarget:self];
     [menu addItem:item];
+
+    item = [[NSMenuItem alloc] initWithTitle:@"Reply All" action:@selector(replyAllMessage:) keyEquivalent:@"a"];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+
+    item = [[NSMenuItem alloc] initWithTitle:@"Forward" action:@selector(forwardMessage:) keyEquivalent:@"f"];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+    
+    // Backspace assigned as delete
+    item = [[NSMenuItem alloc] initWithTitle:@"Delete" action:@selector(deleteMessage:) keyEquivalent:[NSString stringWithFormat:@"%c", 0x08]];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Archive" action:@selector(archiveMessage:) keyEquivalent:@"e"];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+    
     item = [NSMenuItem separatorItem];
     [menu addItem:item];
+    
     item = [[NSMenuItem alloc] initWithTitle:@"Mark as Read" action:@selector(toggleRead:) keyEquivalent:@"u"];
-    [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
+    [item setKeyEquivalentModifierMask:0];
+
     [item setTarget:self];
     [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Mark as Starred" action:@selector(toggleStar:) keyEquivalent:@"l"];
-    [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Mark as Starred" action:@selector(toggleStar:) keyEquivalent:@"s"];
+    [item setKeyEquivalentModifierMask:0];
     [item setTarget:self];
     [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Mark as Spam" action:@selector(markAsSpam:) keyEquivalent:@"j"];
-    [item setKeyEquivalentModifierMask:NSShiftKeyMask | NSCommandKeyMask];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Star and Archive" action:@selector(starAndArchive:) keyEquivalent:@"."];
+    [item setKeyEquivalentModifierMask:0];
     [item setTarget:self];
     [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Apply Labels" action:@selector(showLabelsPanel:) keyEquivalent:@"l"];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Mark as Spam" action:@selector(markAsSpam:) keyEquivalent:@"!"];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Apply Label" action:@selector(showLabelsPanel:) keyEquivalent:@"l"];
+    [item setKeyEquivalentModifierMask:0];
+    [item setTarget:self];
+    [menu addItem:item];
+    
+    item = [[NSMenuItem alloc] initWithTitle:@"Apply Label And Archive" action:@selector(showLabelsAndArchivePanel:) keyEquivalent:@"l"];
     [item setKeyEquivalentModifierMask:NSCommandKeyMask];
-    [item setTarget:self];
-    [menu addItem:item];
-    item = [[NSMenuItem alloc] initWithTitle:@"Apply Labels And Archive" action:@selector(showLabelsAndArchivePanel:) keyEquivalent:@"l"];
-    [item setKeyEquivalentModifierMask:NSCommandKeyMask | NSAlternateKeyMask];
     [item setTarget:self];
     [menu addItem:item];
     return menu;
@@ -2026,11 +2063,6 @@ private:
     return _refreshing;
 }
 
-- (void) _replyMessage
-{
-    [self _replyMessageWithType:DJLReplyTypeReplyAll];
-}
-
 - (void) _forwardMessage
 {
     [self _replyMessageWithType:DJLReplyTypeForward];
@@ -2264,14 +2296,14 @@ private:
     }
     else if ([item action] == @selector(toggleStar:)) {
         if ([self _isStarred]) {
-            [item setTitle:@"Removed star"];
+            [item setTitle:@"Remove Star"];
         }
         else {
             [item setTitle:@"Mark as Starred"];
         }
         return [[_tableView selectedRowIndexes] count] > 0;
     }
-    else if ([item action] == @selector(archiveMessage:)) {
+    else if ([item action] == @selector(archiveMessage:) || [item action] == @selector(starAndArchive:)) {
         if ([[_tableView selectedRowIndexes] count] == 0) {
             return NO;
         }
@@ -2297,6 +2329,9 @@ private:
         return YES;
     }
     else if ([item action] == @selector(replyMessage:)) {
+        return ([[_tableView selectedRowIndexes] count] == 1);
+    }
+    else if ([item action] == @selector(replyAllMessage:)) {
         return ([[_tableView selectedRowIndexes] count] == 1);
     }
     else if ([item action] == @selector(forwardMessage:)) {

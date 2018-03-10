@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10117" systemVersion="16A201w" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10117"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -93,7 +94,8 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="33B-xJ-qVd"/>
-                            <menuItem title="Compose New Message" keyEquivalent="n" id="82">
+                            <menuItem title="Compose New Message" keyEquivalent="c" id="82">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="composeMessage:" target="-1" id="TUj-Ve-XXB"/>
                                 </connections>
@@ -109,19 +111,27 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="FLw-T8-v3B"/>
-                            <menuItem title="Search" keyEquivalent="f" id="ame-z8-xwy">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                            <menuItem title="Search" keyEquivalent="/" id="ame-z8-xwy">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="search:" target="-1" id="hPi-od-s7b"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="e9A-6J-ZaX"/>
                             <menuItem title="Reply" keyEquivalent="r" id="xGF-1m-3Mt">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="replyMessage:" target="-1" id="YXJ-pQ-vCS"/>
+                                    <action selector="replyMessage:" target="-1" id="dh2-5c-LaS"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Forward" keyEquivalent="F" id="hin-5l-w3U">
+                            <menuItem title="Reply All" keyEquivalent="a" id="2Nt-ND-Ero">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="replyAllMessage:" target="-1" id="yfY-bK-SBl"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Forward" keyEquivalent="f" id="hin-5l-w3U">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="forwardMessage:" target="-1" id="Vmv-Te-1zV"/>
                                 </connections>
@@ -130,14 +140,12 @@
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="deleteMessage:" target="-1" id="THC-JZ-XLp"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Archive" id="PiW-1X-Cib">
-                                <string key="keyEquivalent" base64-UTF8="YES">
-CA
-</string>
+                            <menuItem title="Archive" keyEquivalent="e" id="PiW-1X-Cib">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="archiveMessage:" target="-1" id="Kuy-NB-gXW"/>
@@ -150,28 +158,37 @@ CA
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Yho-f9-8LE"/>
-                            <menuItem title="Mark As Unread" keyEquivalent="U" id="5MT-0D-vVH">
+                            <menuItem title="Mark As Unread" keyEquivalent="u" id="5MT-0D-vVH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="toggleRead:" target="-1" id="mte-ev-akc"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Mark As Starred" keyEquivalent="L" id="8Kp-s1-QNz">
+                            <menuItem title="Mark As Starred" keyEquivalent="s" id="8Kp-s1-QNz">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="toggleStar:" target="-1" id="z3g-Eq-jgT"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Mark As Spam" keyEquivalent="J" id="85p-S2-5iL">
+                            <menuItem title="Star and Archive" keyEquivalent="." id="80P-n6-0de">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="starAndArchive:" target="-1" id="c0b-6H-Dfd"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Mark As Spam" keyEquivalent="!" id="85p-S2-5iL">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="markAsSpam:" target="-1" id="y2p-TA-4Ku"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Apply Label" keyEquivalent="l" id="xdL-gx-Fer">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showLabelsPanel:" target="-1" id="ChB-IB-i0c"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Apply Label &amp; Archive" keyEquivalent="l" id="jxH-Rx-EP2">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="showLabelsAndArchivePanel:" target="-1" id="pcv-P4-1V7"/>
                                 </connections>

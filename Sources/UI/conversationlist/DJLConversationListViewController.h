@@ -33,26 +33,17 @@
 - (IBAction) showLabelsAndArchivePanel:(id)sender;
 - (void) toggleSearch;
 
-//- (void) archiveSelection;
-//- (void) trashSelection;
-//- (void) toggleReadSelection;
-//- (void) toggleStarSelection;
-
 - (void) updateFirstResponderState;
-
-//- (void) replyMessage;
-//- (void) forwardMessage;
-
-//- (void) archiveMessage;
-//- (void) deleteMessage;
 
 - (IBAction) toggleRead:(id)sender;
 - (IBAction) toggleStar:(id)sender;
+- (IBAction) starAndArchive:(id)sender;
 - (IBAction) deleteMessage:(id)sender;
 - (IBAction) archiveMessage:(id)sender;
 - (IBAction) markAsSpam:(id)sender;
-- (void) replyMessage:(id)sender;
-- (void) forwardMessage:(id)sender;
+- (IBAction) replyMessage:(id)sender;
+- (IBAction) replyAllMessage:(id)sender;
+- (IBAction) forwardMessage:(id)sender;
 
 - (void) refresh;
 
