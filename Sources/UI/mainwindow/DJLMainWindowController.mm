@@ -2202,7 +2202,7 @@ public:
         [MPGoogleAnalyticsTracker trackEventOfCategory:@"Composer" action:@"Forward" label:@"Open a forward composer" value:@(0)];
         [composer forwardMessageRowID:messageRowID folderID:folderID account:account];
     }
-    else {
+    else { // omh -- this is hit if reply or reply all, and it looks like the nature of the replyType is lost...
         [MPGoogleAnalyticsTracker trackEventOfCategory:@"Composer" action:@"Reply" label:@"Open a reply composer" value:@(0)];
         [composer replyMessageRowID:messageRowID folderID:folderID account:account];
     }
